@@ -363,6 +363,17 @@ module.exports = function (grunt) {
                 'imagemin',
                 'svgmin'
             ]
+        },
+
+        localtunnel: {
+            options: {
+                port: 9001,
+                open: true,
+                keepalive: true,
+                subdomain: 'zinc'
+            },
+            test: {
+            }
         }
     });
 
@@ -386,6 +397,8 @@ module.exports = function (grunt) {
         grunt.task.run([target ? ('serve:' + target) : 'serve']);
     });
 
+    grunt.loadNpmTasks('grunt-localtunnel-me');
+
     grunt.registerTask('test', function (target) {
         if (target !== 'watch') {
             grunt.task.run([
@@ -395,10 +408,18 @@ module.exports = function (grunt) {
             ]);
         }
 
-        grunt.task.run([
-            'connect:test',
-            'mocha'
-        ]);
+        if (target === 'serve') {
+            grunt.task.run([
+                'connect:test',
+                'localtunnel:test'
+            ]);
+        } else {
+            grunt.task.run([
+                'connect:test',
+                'mocha'
+            ]);
+        }
+
     });
 
     grunt.registerTask('build', [
