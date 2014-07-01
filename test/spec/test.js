@@ -1,4 +1,4 @@
-/* global describe, it */
+/* global describe, it, expect */
 
 (function () {
     'use strict';
@@ -8,6 +8,11 @@
             it('should run here few assertions', function () {
 
             });
+        });
+    });
+    describe('find variable a', function(){
+        it('should be awesome', function(){
+            expect(a).to.equal('hello');
         });
     });
 })();
